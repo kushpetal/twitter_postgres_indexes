@@ -2,6 +2,7 @@ CREATE EXTENSION postgis;
 
 \set ON_ERROR_STOP on
 
+
 BEGIN;
 
 /*
@@ -101,5 +102,8 @@ CREATE MATERIALIZED VIEW tweet_tags_cooccurrence AS (
     GROUP BY t1.tag, t2.tag
     ORDER BY total DESC
 );
+
+ALTER TABLE tweets SET (parallel_workers = 80);
+ALTER TABLE tweet_tags SET (parallel_workers = 80);
 
 COMMIT;
