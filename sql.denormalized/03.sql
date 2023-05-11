@@ -1,8 +1,8 @@
-SELECT data->>'lang' AS lang, count(distinct data->>'id')
+SELECT data->>'lang' AS lang, count(*)
 FROM tweets_jsonb
-WHERE data->'entities'->'hashtags' @> '[{"text": "coronavirus"}]' 
+WHERE data->'entities'->'hashtags' @@ '$[*].text == "coronavirus"' 
       OR 
-      data->'extended_tweet'->'entities'->'hashtags' @> '[{"text": "coronavirus"}]'
+      data->'extended_tweet'->'entities'->'hashtags' @@ '$[*].text == "coronavirus"'
 GROUP BY data->>'lang'
 ORDER BY count DESC, data->>'lang';
 

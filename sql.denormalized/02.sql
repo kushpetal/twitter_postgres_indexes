@@ -1,4 +1,4 @@
-SELECT '#' || t.hashtag AS tag, count(*) AS count
+SELECT '#' || t.hashtag AS tag, count(*)
 FROM ( SELECT DISTINCT data->>'id' AS id_tweets, jsonb_array_elements(data->'entities'->'hashtags')->>'text' AS hashtag
        FROM tweets_jsonb
        WHERE data->'entities'->'hashtags'@@'$[*].text == "coronavirus"'
